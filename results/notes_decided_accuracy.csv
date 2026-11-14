@@ -1,0 +1,9 @@
+system,training_answers,decided_items_correct,decided_written_as_undecided,all_conclusions_correct
+2B v12,old teacher rules,0.641,0.31,0.710
+A (v12 + 1 epoch),550 old answers,0.670,0.29,0.727
+B (v12 + 1 epoch),550 rewritten answers,0.709,0.24,0.758
+A2 (v12 + 1 epoch),1130 old answers,0.615,0.34,0.696
+B2 (v12 + 1 epoch),1130 rewritten answers,0.736,0.22,0.773
+2B v15 (from base),all rewritten answers,0.702,0.25,0.742
+teacher old rules (t15),-,0.785,0.20,0.831
+teacher new rules (t16),-,0.869,0.10,0.888

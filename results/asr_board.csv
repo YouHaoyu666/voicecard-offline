@@ -1,0 +1,4 @@
+config,librispeech_clean,librispeech_other,fleurs_en,fleurs_zh,aishell1
+board original (SenseVoice-Small),7.66,14.11,13.70,13.80,8.93
+board v5 (accent fine-tune),6.01,11.42,10.55,11.06,5.79
+board v5s (v5 + fp16 overflow fix),3.81,8.21,9.29,5.48,4.48
