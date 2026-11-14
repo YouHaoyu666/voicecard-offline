@@ -1,0 +1,10 @@
+__pycache__/
+.venv*/
+bench/data/
+bench/results*/
+*.wav
+*.onnx
+*.rknn
+*.rkllm
+*.gguf
+*.safetensors
