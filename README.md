@@ -29,24 +29,7 @@ Small models are usually trained on the outputs of a big one. Which big one matt
 
 ## How it was trained
 
-```mermaid
-flowchart LR
-  subgraph Speech
-    A1[Public audio<br/>YouTube CC-BY, NSC, Common Voice] --> A2[Qwen3-ASR-1.7B labels<br/>keep if close to human captions]
-    A2 --> A3[Fine-tune SenseVoice-Small<br/>RTX 5090, ~2.8 h]
-    A3 --> A4[Accent + code-switch test sets]
-    A4 -->|pick version| A5[RKNN fp16 + overflow fix<br/>RK3588 NPU]
-  end
-  subgraph Notes
-    B1[Public meeting transcripts] --> B2[Teacher writes notes<br/>DeepSeek API]
-    B2 --> B3[SFT Qwen3.5-2B<br/>RTX 5090]
-    B3 --> B4[Student samples answers<br/>DeepSeek grades them]
-    B4 --> B5[Preference pairs, DPO]
-    B3 --> B6[Blind judging<br/>5 judges, 20 meetings]
-    B5 --> B6
-    B6 -->|passes pre-set bar| B7[RKLLM w8a8<br/>RK3588 NPU]
-  end
-```
+![How the two on-device models were trained](docs/img/pipeline.png)
 
 **Choosing models.** Before training anything, 12 open speech models were tested on English accents ([accent test](docs/accent-test.md)) and on Singapore speech ([Singapore test](docs/singapore-asr.md)). SenseVoice-Small was not the most accurate, but it is a CTC model (it never loops or switches language mid-sentence), runs at 12× real time on a laptop CPU and has mature NPU support. For notes, 7 teacher candidates and 3 student sizes were blind-judged on 20 meetings first; the 2B student was chosen because it is the largest that fits the 4 GB board (the NPU only supports 8-bit weights there).
 
@@ -100,7 +83,7 @@ Published in batches. Every result above is in `results/` now; the training code
 
 - `bench/` scripts: build test sets from public datasets, run models, score
 - `results/` every number in this README, as CSV
-- `tools/make_charts.py` redraws the charts from `results/`
+- `tools/make_charts.py` redraws the charts from `results/`; `tools/make_flow.py` draws the pipeline diagram
 - `docs/` write-ups
 
 Datasets are not redistributed. Each script downloads its data from the original source, under that dataset's licence.
